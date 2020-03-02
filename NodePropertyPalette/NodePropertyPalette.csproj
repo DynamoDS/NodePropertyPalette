@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PropertyPaletteNodeViewModel.cs" />
-    <Compile Include="NodePropertyPaletteExtension.cs" />
+    <Compile Include="NodePropertyPaletteViewExtension.cs" />
     <Compile Include="NodePropertyPaletteViewModel.cs" />
     <Compile Include="NodePropertyPaletteWindow.xaml.cs">
       <DependentUpon>NodePropertyPaletteWindow.xaml</DependentUpon>

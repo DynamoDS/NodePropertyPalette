@@ -9,7 +9,7 @@ namespace NodePropertyPalette
     /// which allows Dynamo users to analyze the performance of graphs
     /// and diagnose bottlenecks and problem areas.
     /// </summary>
-    public class NodePropertyPaletteExtension : IViewExtension
+    public class NodePropertyPaletteViewExtension : IViewExtension
     {
         internal MenuItem NodePropertyPaletteMenuItem;
         private NodePropertyPaletteWindow NodePropertyPaletteView;

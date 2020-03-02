@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading;
 using System.Windows.Data;
 using Dynamo.Core;
-using Dynamo.Engine.Profiling;
 using Dynamo.Graph.Nodes;
 using Dynamo.Graph.Workspaces;
-using Dynamo.ViewModels;
 using Dynamo.Wpf.Extensions;
 
 namespace NodePropertyPalette
@@ -56,13 +51,13 @@ namespace NodePropertyPalette
         /// <summary>
         /// Collection of profiling data for nodes in the current workspace
         /// </summary>
-        public ObservableCollection<PropertyPaletteNodeViewModel> ProfiledNodes { get; set; } = new ObservableCollection<PropertyPaletteNodeViewModel>();
+        public ObservableCollection<PropertyPaletteNodeViewModel> PropertyPaletteNodes { get; set; } = new ObservableCollection<PropertyPaletteNodeViewModel>();
 
         /// <summary>
         /// Collection of profiling data for nodes in the current workspace.
         /// Profiling data in this collection is grouped by the profiled nodes' states.
         /// </summary>
-        public CollectionViewSource ProfiledNodesCollection { get; set; }
+        public CollectionViewSource PropertyPaletteNodesCollection { get; set; }
         #endregion
 
         #region Constructor
@@ -79,11 +74,13 @@ namespace NodePropertyPalette
             {
                 CurrentWorkspace = p.CurrentWorkspaceModel as HomeWorkspaceModel;
             }
+            PropertyPaletteNodesCollection = new CollectionViewSource();
+            PropertyPaletteNodesCollection.Source = PropertyPaletteNodes;
+            PropertyPaletteNodesCollection.SortDescriptions.Clear();
+            PropertyPaletteNodesCollection.SortDescriptions.Add(new SortDescription(nameof(PropertyPaletteNodeViewModel.NodeType), ListSortDirection.Descending));
+            if (PropertyPaletteNodesCollection.View != null)
+                PropertyPaletteNodesCollection.View.Refresh();
         }
-
-        #endregion
-
-        #region ProfilingMethods
 
         #endregion
 
@@ -91,36 +88,22 @@ namespace NodePropertyPalette
 
         private void CurrentWorkspaceModel_EvaluationStarted(object sender, EventArgs e)
         {
-
         }
 
         private void CurrentWorkspaceModel_EvaluationCompleted(object sender, Dynamo.Models.EvaluationCompletedEventArgs e)
         {
-            RaisePropertyChanged(nameof(ProfiledNodesCollection));
-            RaisePropertyChanged(nameof(ProfiledNodes));
-
-            ProfiledNodesCollection.Dispatcher.Invoke(() =>
-            {
-                ProfiledNodesCollection.SortDescriptions.Clear();
-                // Sort nodes into execution group
-                ProfiledNodesCollection.SortDescriptions.Add(new SortDescription(nameof(PropertyPaletteNodeViewModel.Name), ListSortDirection.Ascending));
-
-                // Sort nodes into execution order and make sure Total execution time is always bottom
-                ProfiledNodesCollection.SortDescriptions.Add(new SortDescription(nameof(PropertyPaletteNodeViewModel.NodeType), ListSortDirection.Descending));
-                if (ProfiledNodesCollection.View != null)
-                    ProfiledNodesCollection.View.Refresh();
-            });
+            // TODO: We may need to update node values after graph execution,
+            // Depending on if we display node values at all.
         }
-
 
         internal void OnNodeExecutionBegin(NodeModel nm)
         {
-            RaisePropertyChanged(nameof(ProfiledNodesCollection));
+            RaisePropertyChanged(nameof(PropertyPaletteNodesCollection));
         }
 
         internal void OnNodeExecutionEnd(NodeModel nm)
         {
-            RaisePropertyChanged(nameof(ProfiledNodesCollection));
+            RaisePropertyChanged(nameof(PropertyPaletteNodesCollection));
         }
 
         #endregion
@@ -129,18 +112,16 @@ namespace NodePropertyPalette
 
         private void CurrentWorkspaceModel_NodeAdded(NodeModel node)
         {
+            // When a new node added on canvas, update PropertyPalette
             var profiledNode = new PropertyPaletteNodeViewModel(node);
-            node.NodeExecutionBegin += OnNodeExecutionBegin;
-            node.NodeExecutionEnd += OnNodeExecutionEnd;
-            ProfiledNodes.Add(profiledNode);
-            RaisePropertyChanged(nameof(ProfiledNodesCollection));
+            PropertyPaletteNodes.Add(profiledNode);
+            RaisePropertyChanged(nameof(PropertyPaletteNodesCollection));
         }
 
         private void CurrentWorkspaceModel_NodeRemoved(NodeModel node)
         {
-            node.NodeExecutionBegin -= OnNodeExecutionBegin;
-            node.NodeExecutionEnd -= OnNodeExecutionEnd;
-            RaisePropertyChanged(nameof(ProfiledNodesCollection));
+            // TODO: remove the deleted node as well in PropertyPalette
+            RaisePropertyChanged(nameof(PropertyPaletteNodesCollection));
         }
 
         private void OnCurrentWorkspaceChanged(IWorkspaceModel workspace)
@@ -190,9 +171,12 @@ namespace NodePropertyPalette
 
             foreach (var node in workspace.Nodes)
             {
+                var profiledNode = new PropertyPaletteNodeViewModel(node);
+                PropertyPaletteNodes.Add(profiledNode);
                 node.NodeExecutionBegin += OnNodeExecutionBegin;
                 node.NodeExecutionEnd += OnNodeExecutionEnd;
             }
+            RaisePropertyChanged(nameof(PropertyPaletteNodesCollection));
         }
 
         /// <summary>

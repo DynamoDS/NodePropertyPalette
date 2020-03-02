@@ -94,7 +94,7 @@
             <DataGrid 
             x:Name="NodeAnalysisTable" 
             Grid.Row="1"
-            ItemsSource="{Binding Path=ProfiledNodesCollection.View}"
+            ItemsSource="{Binding Path=PropertyPaletteNodesCollection.View}"
             Style="{StaticResource DataGridStyle1}"
             AutoGenerateColumns="False"
             CanUserAddRows="False"
