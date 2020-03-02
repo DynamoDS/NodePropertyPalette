@@ -1,0 +1,4 @@
+﻿<ViewExtensionDefinition>
+  <AssemblyPath>..\bin\NodePropertyPalette.dll</AssemblyPath>
+  <TypeName>NodePropertyPalette.NodePropertyPaletteViewExtension</TypeName>
+</ViewExtensionDefinition>

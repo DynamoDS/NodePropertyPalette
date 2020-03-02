@@ -1,0 +1,21 @@
+{
+  "license": "",
+  "file_hash": null,
+  "name": "NodePropertyPalette",
+  "version": "1.0.0",
+  "description": "NodePropertyPalette",
+  "group": "",
+  "keywords": [
+    "PropertyPalette"
+  ],
+  "dependencies": [],
+  "host_dependencies": [],
+  "contents": "",
+  "engine_version": "2.5.0",
+  "engine": "dynamo",
+  "engine_metadata": "",
+  "site_url": "https://dynamobim.org/",
+  "repository_url": "https://github.com/DynamoDS/NodePropertyPalette",
+  "contains_binaries": true,
+  "node_libraries": []
+}
