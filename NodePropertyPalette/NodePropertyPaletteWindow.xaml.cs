@@ -21,6 +21,8 @@ namespace NodePropertyPalette
 
         private ViewModelCommandExecutive viewModelCommandExecutive;
 
+        private NodePropertyPaletteWindowViewModel viewModel;
+
         /// <summary>
         /// The unique ID for the NodePropertyPalette view extension. 
         /// Used to identify the view extension when sending recordable commands.
@@ -37,7 +39,7 @@ namespace NodePropertyPalette
         /// Create the NodePropertyPalette Window
         /// </summary>
         /// <param name="vlp"></param>
-        public NodePropertyPaletteWindow(ViewLoadedParams vlp, string id)
+        public NodePropertyPaletteWindow(ViewLoadedParams vlp, string id, NodePropertyPaletteWindowViewModel vm)
         {
             InitializeComponent();
             viewLoadedParams = vlp;
@@ -48,6 +50,7 @@ namespace NodePropertyPalette
             commandExecutive = vlp.CommandExecutive;
             viewModelCommandExecutive = vlp.ViewModelCommandExecutive;
             uniqueId = id;
+            viewModel = vm;
         }
 
         private void DynamoWindow_SizeChanged(object sender, System.Windows.SizeChangedEventArgs e)
@@ -84,6 +87,11 @@ namespace NodePropertyPalette
         internal void Dispose()
         {
             viewLoadedParams.DynamoWindow.SizeChanged -= DynamoWindow_SizeChanged;
+        }
+
+        private void ApplyButton_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.ApplyBulkOperation();
         }
     }
 }

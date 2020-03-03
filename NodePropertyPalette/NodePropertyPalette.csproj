@@ -49,6 +49,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums.cs" />
     <Compile Include="PropertyPaletteNodeViewModel.cs" />
     <Compile Include="NodePropertyPaletteViewExtension.cs" />
     <Compile Include="NodePropertyPaletteViewModel.cs" />

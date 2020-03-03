@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -59,6 +60,11 @@ namespace NodePropertyPalette
         /// Profiling data in this collection is grouped by the profiled nodes' states.
         /// </summary>
         public CollectionViewSource PropertyPaletteNodesCollection { get; set; }
+
+        /// <summary>
+        /// Selected bulk operation to apply.
+        /// </summary>
+        public BulkOperation BulkOperation { get; set; }
         #endregion
 
         #region Constructor
@@ -138,6 +144,64 @@ namespace NodePropertyPalette
         private void OnCurrentWorkspaceCleared(IWorkspaceModel workspace)
         {
             CurrentWorkspace = viewLoadedParams.CurrentWorkspaceModel as HomeWorkspaceModel;
+        }
+
+        #endregion
+
+        #region Operations
+
+        internal void ApplyBulkOperation()
+        {
+            var selectedNodes = PropertyPaletteNodes.Where(n => n.Selected);
+            switch (BulkOperation)
+            {
+                case BulkOperation.Delete:
+                    Delete(selectedNodes);
+                    break;
+                case BulkOperation.Freeze:
+                    Freeze(selectedNodes);
+                    break;
+                case BulkOperation.Unfreeze:
+                    Unfreeze(selectedNodes);
+                    break;
+                case BulkOperation.Disconnect:
+                    Disconnect(selectedNodes);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void Disconnect(IEnumerable<PropertyPaletteNodeViewModel> selectedNodes)
+        {
+            // TODO: Implement this
+        }
+
+        private void Unfreeze(IEnumerable<PropertyPaletteNodeViewModel> selectedNodes)
+        {
+            foreach (var node in selectedNodes)
+            {
+                if (node.IsFrozen)
+                {
+                    node.IsFrozen = false;
+                }
+            }
+        }
+
+        private void Freeze(IEnumerable<PropertyPaletteNodeViewModel> selectedNodes)
+        {
+            foreach (var node in selectedNodes)
+            {
+                if (!node.IsFrozen)
+                {
+                    node.IsFrozen = true;
+                }
+            }
+        }
+
+        private void Delete(IEnumerable<PropertyPaletteNodeViewModel> selectedNodes)
+        {
+            // TODO: Implement this
         }
 
         #endregion

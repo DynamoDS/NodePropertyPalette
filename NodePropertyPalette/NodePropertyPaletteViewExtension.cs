@@ -27,7 +27,7 @@ namespace NodePropertyPalette
         public void Loaded(ViewLoadedParams p)
         {
             ViewModel = new NodePropertyPaletteWindowViewModel(p);
-            NodePropertyPaletteView = new NodePropertyPaletteWindow(p, UniqueId)
+            NodePropertyPaletteView = new NodePropertyPaletteWindow(p, UniqueId, ViewModel)
             {
                 // Set the data context for the main grid in the window.
                 NodesTable = { DataContext = ViewModel },
