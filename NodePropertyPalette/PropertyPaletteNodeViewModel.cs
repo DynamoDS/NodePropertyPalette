@@ -24,7 +24,7 @@ namespace NodePropertyPalette
         }
 
         /// <summary>
-        /// The most recent execution time of this node
+        /// The node type of this node
         /// </summary>
         public string NodeType
         {
@@ -33,6 +33,8 @@ namespace NodePropertyPalette
                 return NodeModel.NodeType;
             }
         }
+
+        public bool Selected { get; set; }
 
         public bool IsFrozen
         {
@@ -45,6 +47,7 @@ namespace NodePropertyPalette
                 NodeModel.IsFrozen = value;
             }
         }
+
 
         internal NodeModel NodeModel { get; set; }
 

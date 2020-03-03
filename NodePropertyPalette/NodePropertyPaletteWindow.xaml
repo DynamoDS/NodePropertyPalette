@@ -87,12 +87,16 @@
             Orientation="Horizontal"
             HorizontalAlignment="Left"
             Grid.Row="0">
-            <Label Foreground="White">All Nodes in Current Graph:</Label>
+            <Label Foreground="White">Bulk Operation:</Label>
+            <ComboBox Margin="10,2,0,13" Name="ComboBox1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto">
+                <ComboBoxItem Content="Delete"></ComboBoxItem>
+                <ComboBoxItem Content="Freeze"></ComboBoxItem>
+            </ComboBox>
         </StackPanel>
 
         <StackPanel Grid.Row="1">
             <DataGrid 
-            x:Name="NodeAnalysisTable" 
+            x:Name="NodesTable" 
             Grid.Row="1"
             ItemsSource="{Binding Path=PropertyPaletteNodesCollection.View}"
             Style="{StaticResource DataGridStyle1}"
@@ -109,7 +113,7 @@
             CanUserResizeColumns="True" 
             CanUserSortColumns="True"
             HeadersVisibility="Column"
-            SelectionChanged="NodeAnalysisTable_SelectionChanged">
+            SelectionChanged="NodesTable_SelectionChanged">
 
                 <DataGrid.GroupStyle>
                     <GroupStyle>
@@ -131,19 +135,18 @@
                 <DataGrid.Columns>
 
                     <!-- TODO: Replace this with check box-->
-                    <DataGridTextColumn 
-                    Header="#" 
-                    Binding="{Binding Path=ExecutionOrderNumber}" 
-                    Foreground="#aaaaaa" 
+                    <DataGridCheckBoxColumn 
+                    Header="Selected" 
+                    Binding="{Binding Path=Selected}"
                     IsReadOnly="True" 
                     Width="Auto">
-                        <DataGridTextColumn.ElementStyle>
+                        <!--<DataGridCheckBoxColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="VerticalAlignment" Value="Center" />
                                 <Setter Property="Margin" Value="10,0,10,0"/>
                             </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
+                        </DataGridCheckBoxColumn.ElementStyle>-->
+                    </DataGridCheckBoxColumn>
 
                     <!-- Node Name -->
                     <DataGridTextColumn 

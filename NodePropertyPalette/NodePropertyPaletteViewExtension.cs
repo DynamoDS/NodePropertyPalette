@@ -30,7 +30,7 @@ namespace NodePropertyPalette
             NodePropertyPaletteView = new NodePropertyPaletteWindow(p, UniqueId)
             {
                 // Set the data context for the main grid in the window.
-                NodeAnalysisTable = { DataContext = ViewModel },
+                NodesTable = { DataContext = ViewModel },
                 MainGrid = { DataContext = ViewModel }
             };
 
@@ -40,7 +40,6 @@ namespace NodePropertyPalette
                 if (NodePropertyPaletteMenuItem.IsChecked)
                 {
                     p.AddToExtensionsSideBar(this, NodePropertyPaletteView);
-                    //ViewModel.EnableProfiling();
                 }
                 else
                 {
