@@ -43,7 +43,7 @@ namespace NodePropertyPalette
             viewLoadedParams = vlp;
             // Initialize the height of the datagrid in order to make sure
             // vertical scrollbar can be displayed correctly.
-            this.NodeAnalysisTable.Height = vlp.DynamoWindow.Height - sidebarHeightOffset;
+            this.NodesTable.Height = vlp.DynamoWindow.Height - sidebarHeightOffset;
             vlp.DynamoWindow.SizeChanged += DynamoWindow_SizeChanged;
             commandExecutive = vlp.CommandExecutive;
             viewModelCommandExecutive = vlp.ViewModelCommandExecutive;
@@ -53,10 +53,10 @@ namespace NodePropertyPalette
         private void DynamoWindow_SizeChanged(object sender, System.Windows.SizeChangedEventArgs e)
         {
             // Update the new height of datagrid
-            this.NodeAnalysisTable.Height = e.NewSize.Height - sidebarHeightOffset;
+            this.NodesTable.Height = e.NewSize.Height - sidebarHeightOffset;
         }
 
-        private void NodeAnalysisTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void NodesTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Get NodeModel(s) that correspond to selected row(s)
             var selectedNodes = new List<NodeModel>();
