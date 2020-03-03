@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 using System.Windows.Data;
 using Dynamo.Core;
@@ -120,7 +121,11 @@ namespace NodePropertyPalette
 
         private void CurrentWorkspaceModel_NodeRemoved(NodeModel node)
         {
-            // TODO: remove the deleted node as well in PropertyPalette
+            var propertyPaletteNode = PropertyPaletteNodes.Where(n => n.NodeModel == node).FirstOrDefault();
+            if (propertyPaletteNode != null)
+            {
+                PropertyPaletteNodes.Remove(propertyPaletteNode);
+            }
             RaisePropertyChanged(nameof(PropertyPaletteNodesCollection));
         }
 
@@ -168,7 +173,7 @@ namespace NodePropertyPalette
             workspace.NodeRemoved += CurrentWorkspaceModel_NodeRemoved;
             workspace.EvaluationStarted += CurrentWorkspaceModel_EvaluationStarted;
             workspace.EvaluationCompleted += CurrentWorkspaceModel_EvaluationCompleted;
-
+            PropertyPaletteNodes.Clear();
             foreach (var node in workspace.Nodes)
             {
                 var profiledNode = new PropertyPaletteNodeViewModel(node);
