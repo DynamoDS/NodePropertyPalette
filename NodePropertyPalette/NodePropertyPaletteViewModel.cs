@@ -125,6 +125,7 @@ namespace NodePropertyPalette
             if (propertyPaletteNode != null)
             {
                 PropertyPaletteNodes.Remove(propertyPaletteNode);
+                propertyPaletteNode.Dispose();
             }
             RaisePropertyChanged(nameof(PropertyPaletteNodesCollection));
         }
@@ -160,6 +161,12 @@ namespace NodePropertyPalette
                 node.NodeExecutionBegin -= OnNodeExecutionBegin;
                 node.NodeExecutionEnd -= OnNodeExecutionEnd;
             }
+
+            foreach (var node in PropertyPaletteNodes)
+            {
+                node.Dispose();
+            }
+            PropertyPaletteNodes.Clear();
         }
 
         /// <summary>
@@ -173,7 +180,7 @@ namespace NodePropertyPalette
             workspace.NodeRemoved += CurrentWorkspaceModel_NodeRemoved;
             workspace.EvaluationStarted += CurrentWorkspaceModel_EvaluationStarted;
             workspace.EvaluationCompleted += CurrentWorkspaceModel_EvaluationCompleted;
-            PropertyPaletteNodes.Clear();
+            
             foreach (var node in workspace.Nodes)
             {
                 var profiledNode = new PropertyPaletteNodeViewModel(node);

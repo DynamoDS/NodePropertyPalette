@@ -1,9 +1,15 @@
 ﻿using Dynamo.Core;
 using Dynamo.Graph.Nodes;
+using System;
+using System.ComponentModel;
+using System.Linq;
+
 namespace NodePropertyPalette
 {
-    public class PropertyPaletteNodeViewModel : NotificationObject
+    public class PropertyPaletteNodeViewModel : NotificationObject, IDisposable
     {
+        private readonly string[] BoundProperties = new string[] { "IsFrozen" };
+
         #region Properties
         /// <summary>
         /// The name of this PropertyPalette Node.
@@ -28,6 +34,18 @@ namespace NodePropertyPalette
             }
         }
 
+        public bool IsFrozen
+        {
+            get
+            {
+                return NodeModel.IsFrozen;
+            }
+            set
+            {
+                NodeModel.IsFrozen = value;
+            }
+        }
+
         internal NodeModel NodeModel { get; set; }
 
         #endregion
@@ -39,6 +57,30 @@ namespace NodePropertyPalette
         public PropertyPaletteNodeViewModel(NodeModel node)
         {
             NodeModel = node;
+            SubscribeToUpdateEvents();
+        }
+
+        public void Dispose()
+        {
+            UnsubscribeFromUpdateEvents();
+        }
+
+        private void UnsubscribeFromUpdateEvents()
+        {
+            NodeModel.PropertyChanged -= Node_PropertyChanged;
+        }
+
+        private void SubscribeToUpdateEvents()
+        {
+            NodeModel.PropertyChanged += Node_PropertyChanged;
+        }
+
+        private void Node_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (BoundProperties.Contains(e.PropertyName))
+            {
+                RaisePropertyChanged(e.PropertyName);
+            }
         }
     }
 }

@@ -176,6 +176,14 @@
                     </DataGridTextColumn>
 
                 </DataGrid.Columns>
+                <!-- Expanded Details -->
+                <DataGrid.RowDetailsTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <CheckBox IsChecked="{Binding IsFrozen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="Frozen"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </DataGrid.RowDetailsTemplate>
             </DataGrid>
         </StackPanel>
     </Grid>
