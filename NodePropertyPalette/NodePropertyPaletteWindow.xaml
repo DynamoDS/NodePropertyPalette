@@ -39,6 +39,8 @@
                 <Setter Property="Background" Value="#333333"/>
                 <Setter Property="BorderThickness" Value="0.45" />
                 <Setter Property="BorderBrush" Value="#555555"/>
+                <Setter Property="IsSelected" Value="{Binding Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick"/>
                 <Style.Triggers>
                     <Trigger Property="IsSelected" Value="True">
                         <Setter Property="Background" Value="#555555" />
@@ -194,6 +196,67 @@
                 <Style.Triggers>
                 </Style.Triggers>
             </Style>
+            
+            <!-- Button style -->
+            <Style x:Key="STextButton" TargetType="{x:Type Button}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Border x:Name="container"
+                            Background="Transparent"
+                            BorderBrush="#3c3c3c"
+                            BorderThickness="1">
+                                <Grid x:Name="inner" Background="#373737" Height="Auto" VerticalAlignment="Top">
+                                    <TextBlock x:Name="text"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       Margin="5,2"
+                                       Foreground="#bbbbbb"
+                                       Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}"></TextBlock>
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Button.IsMouseOver"
+                                 Value="true">
+                                    <Setter TargetName="container"
+                                    Property="BorderBrush"
+                                    Value="#656565" />
+                                    <Setter TargetName="inner"
+                                    Property="Background"
+                                    Value="#373737" />
+                                </Trigger>
+                                <Trigger Property="Button.IsPressed"
+                                 Value="true">
+                                    <Setter TargetName="container"
+                                    Property="BorderBrush"
+                                    Value="#656565" />
+                                    <Setter TargetName="inner"
+                                    Property="Background"
+                                    Value="#272727" />
+                                </Trigger>
+                                <Trigger Property="IsEnabled"
+                                 Value="true">
+                                    <Setter TargetName="text"
+                                    Property="Foreground"
+                                    Value="#bbbbbb" />
+                                </Trigger>
+                                <Trigger Property="IsEnabled"
+                                 Value="false">
+                                    <Setter TargetName="container"
+                                    Property="BorderBrush"
+                                    Value="Transparent" />
+                                    <Setter TargetName="inner"
+                                    Property="Background"
+                                    Value="#373737" />
+                                    <Setter TargetName="text"
+                                    Property="Foreground"
+                                    Value="#555555" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -215,7 +278,7 @@
             <ComboBox Margin="10,2,0,13" Name="ComboBox1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto" Style="{StaticResource ResourceKey=SComboBox}"
                       ItemsSource="{Binding Source={StaticResource bulkOperationValues}}" SelectedItem="{Binding BulkOperation}">
             </ComboBox>
-            <Button Content="Apply" Click="ApplyButton_Click"/>
+            <Button Content="Apply" Click="ApplyButton_Click" Margin="10,2,0,13" Style="{StaticResource ResourceKey=STextButton}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="1">
@@ -230,14 +293,15 @@
             FontSize="11"
             VerticalAlignment="Center"
             SelectionUnit="FullRow"
-            SelectionMode="Single"
+            SelectionMode="Extended"
             ScrollViewer.CanContentScroll="False" 
             ScrollViewer.HorizontalScrollBarVisibility="Auto"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
             CanUserResizeColumns="True" 
             CanUserSortColumns="True"
             HeadersVisibility="Column"
-            SelectionChanged="NodesTable_SelectionChanged">
+            SelectionChanged="NodesTable_SelectionChanged"
+            RowDetailsVisibilityMode="Collapsed">
 
                 <DataGrid.GroupStyle>
                     <GroupStyle>
@@ -257,25 +321,6 @@
                 </DataGrid.GroupStyle>
 
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Selected" Width="Auto">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <CheckBox HorizontalAlignment="Center" IsChecked="{Binding Path=Selected, UpdateSourceTrigger=PropertyChanged}" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <!-- TODO: Replace this with check box-->
-                    <!--<DataGridCheckBoxColumn 
-                    Header="Selected" 
-                    Binding="{Binding Path=Selected}"
-                    Width="Auto">-->
-                        <!--<DataGridCheckBoxColumn.ElementStyle>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="VerticalAlignment" Value="Center" />
-                                <Setter Property="Margin" Value="10,0,10,0"/>
-                            </Style>
-                        </DataGridCheckBoxColumn.ElementStyle>-->
-                    <!--</DataGridCheckBoxColumn>-->
 
                     <!-- Node Name -->
                     <DataGridTextColumn 
