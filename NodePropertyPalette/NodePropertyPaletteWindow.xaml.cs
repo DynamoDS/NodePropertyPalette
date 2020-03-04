@@ -93,5 +93,11 @@ namespace NodePropertyPalette
         {
             viewModel.ApplyBulkOperation();
         }
+
+        private void DataGridRow_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            DataGridRow row = sender as DataGridRow;
+            row.DetailsVisibility = row.DetailsVisibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
+        }
     }
 }
