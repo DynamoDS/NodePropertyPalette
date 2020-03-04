@@ -27,7 +27,7 @@ namespace NodePropertyPalette
         public void Loaded(ViewLoadedParams p)
         {
             ViewModel = new NodePropertyPaletteWindowViewModel(p);
-            NodePropertyPaletteView = new NodePropertyPaletteWindow(p, UniqueId, ViewModel)
+            NodePropertyPaletteView = new NodePropertyPaletteWindow(p, ViewModel)
             {
                 // Set the data context for the main grid in the window.
                 NodesTable = { DataContext = ViewModel },
@@ -65,7 +65,7 @@ namespace NodePropertyPalette
         {
             get
             {
-                return "9B1A1CB9-C448-4B86-809C-2A70FD05DED1";
+                return Constants.ExtensionUniqueId;
             }
         }
 
@@ -76,7 +76,7 @@ namespace NodePropertyPalette
         {
             get
             {
-                return "NodePropertyPalette";
+                return Constants.ExtensionName;
             }
         }
     }

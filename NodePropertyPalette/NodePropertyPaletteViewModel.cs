@@ -8,6 +8,7 @@ using System.Windows.Data;
 using Dynamo.Core;
 using Dynamo.Graph.Nodes;
 using Dynamo.Graph.Workspaces;
+using Dynamo.Models;
 using Dynamo.Wpf.Extensions;
 
 namespace NodePropertyPalette
@@ -174,7 +175,19 @@ namespace NodePropertyPalette
 
         private void Disconnect(IEnumerable<PropertyPaletteNodeViewModel> selectedNodes)
         {
-            // TODO: Implement this
+            foreach (var node in selectedNodes)
+            {
+                // Materialize the enumeration first to modify it without causing errors
+                foreach (var connector in node.NodeModel.AllConnectors.ToList())
+                {
+                    // This would be the ideal. Unfortunately, the method is not publicly exposed.
+                    //connector.Delete();
+
+                    // This is what can be currently achieved. Connectors are logically deleted but still visible.
+                    connector.Start.Connectors.Remove(connector);
+                    connector.End.Connectors.Remove(connector);
+                }
+            }
         }
 
         private void Unfreeze(IEnumerable<PropertyPaletteNodeViewModel> selectedNodes)
@@ -201,7 +214,13 @@ namespace NodePropertyPalette
 
         private void Delete(IEnumerable<PropertyPaletteNodeViewModel> selectedNodes)
         {
-            // TODO: Implement this
+            // Have to delete individually as multiple deletion only removes the first one
+            // TODO: Investigate why the workspace's NodeRemoved even is not fired.
+            foreach (var node in selectedNodes)
+            {
+                var command = new DynamoModel.DeleteModelCommand(node.NodeModel.GUID);
+                viewLoadedParams.CommandExecutive.ExecuteCommand(command, Constants.ExtensionUniqueId, Constants.ExtensionName);
+            }
         }
 
         #endregion
