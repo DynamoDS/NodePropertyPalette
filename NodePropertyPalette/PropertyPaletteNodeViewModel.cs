@@ -36,6 +36,50 @@ namespace NodePropertyPalette
 
         public bool Selected { get; set; }
 
+        /// <summary>
+        /// Reflect if node is set as input
+        /// </summary>
+        public bool IsSetAsInput
+        {
+            get 
+            {
+                return NodeModel.IsSetAsInput;
+            }
+            set
+            {
+                NodeModel.IsSetAsInput = value;
+            }
+        }
+
+        /// <summary>
+        /// Reflect if node is set as output
+        /// </summary>
+        public bool IsSetAsOutput
+        {
+            get
+            {
+                return NodeModel.IsSetAsOutput;
+            }
+            set
+            {
+                NodeModel.IsSetAsOutput = value;
+            }
+        }
+
+        /// <summary>
+        /// Reflect node's GUID
+        /// </summary>
+        public string GUID
+        {
+            get
+            {
+                return NodeModel.GUID.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Reflect if node is frozen
+        /// </summary>
         public bool IsFrozen
         {
             get
