@@ -24,12 +24,6 @@ namespace NodePropertyPalette
         private NodePropertyPaletteWindowViewModel viewModel;
 
         /// <summary>
-        /// The unique ID for the NodePropertyPalette view extension. 
-        /// Used to identify the view extension when sending recordable commands.
-        /// </summary>
-        private string uniqueId;
-
-        /// <summary>
         /// Since there is no API for height offset comparing to
         /// DynamoWindow height. Define it as static for now.
         /// </summary>
@@ -39,7 +33,7 @@ namespace NodePropertyPalette
         /// Create the NodePropertyPalette Window
         /// </summary>
         /// <param name="vlp"></param>
-        public NodePropertyPaletteWindow(ViewLoadedParams vlp, string id, NodePropertyPaletteWindowViewModel vm)
+        public NodePropertyPaletteWindow(ViewLoadedParams vlp, NodePropertyPaletteWindowViewModel vm)
         {
             InitializeComponent();
             viewLoadedParams = vlp;
@@ -49,7 +43,6 @@ namespace NodePropertyPalette
             vlp.DynamoWindow.SizeChanged += DynamoWindow_SizeChanged;
             commandExecutive = vlp.CommandExecutive;
             viewModelCommandExecutive = vlp.ViewModelCommandExecutive;
-            uniqueId = id;
             viewModel = vm;
         }
 
@@ -77,7 +70,7 @@ namespace NodePropertyPalette
             {
                 // Select
                 var command = new DynamoModel.SelectModelCommand(selectedNodes.Select(nm => nm.GUID), ModifierKeys.None);
-                commandExecutive.ExecuteCommand(command, uniqueId, "NodePropertyPalette");
+                commandExecutive.ExecuteCommand(command, Constants.ExtensionUniqueId, Constants.ExtensionName);
 
                 // Focus on selected
                 viewModelCommandExecutive.FindByIdCommand(selectedNodes.First().GUID.ToString());
