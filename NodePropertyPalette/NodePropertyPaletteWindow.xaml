@@ -357,7 +357,10 @@
                 <DataGrid.RowDetailsTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <CheckBox IsChecked="{Binding IsFrozen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="Frozen"/>
+                            <Label Content="{Binding GUID, Mode=OneWay}"></Label>
+                            <CheckBox IsChecked="{Binding IsSetAsInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="IsSetAsInput" HorizontalAlignment="Left"/>
+                            <CheckBox IsChecked="{Binding IsSetAsOutput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="IsSetAsOutput" HorizontalAlignment="Left"/>
+                            <CheckBox IsChecked="{Binding IsFrozen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="Frozen" HorizontalAlignment="Left"/>
                         </StackPanel>
                     </DataTemplate>
                 </DataGrid.RowDetailsTemplate>
