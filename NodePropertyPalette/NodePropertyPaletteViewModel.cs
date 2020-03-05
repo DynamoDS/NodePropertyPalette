@@ -180,12 +180,13 @@ namespace NodePropertyPalette
                 // Materialize the enumeration first to modify it without causing errors
                 foreach (var connector in node.NodeModel.AllConnectors.ToList())
                 {
-                    // This would be the ideal. Unfortunately, the method is not publicly exposed.
-                    //connector.Delete();
-
-                    // This is what can be currently achieved. Connectors are logically deleted but still visible.
-                    connector.Start.Connectors.Remove(connector);
-                    connector.End.Connectors.Remove(connector);
+                    try
+                    {
+                        // Invoke the Delete method which is not publicly exposed.
+                        connector.GetType().GetMethod("Delete", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(connector, new object[] { });
+                    }
+                    catch (Exception)
+                    {}
                 }
             }
         }
