@@ -269,7 +269,7 @@
             HorizontalAlignment="Left"
             Grid.Row="0">
             <Label Foreground="White">Global ElementBinding Switch:</Label>
-            <Controls:ToggleButton x:Name="ElementBindingSwitch" Width="40" />
+            <Controls:ToggleButton x:Name="ElementBindingSwitch" Width="40" MouseLeftButtonDown="ElementBindingSwitch_MouseLeftButtonDown" />
         </StackPanel>
         
         <StackPanel 

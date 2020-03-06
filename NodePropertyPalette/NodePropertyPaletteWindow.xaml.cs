@@ -96,7 +96,8 @@ namespace NodePropertyPalette
 
         private void ElementBindingSwitch_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            (viewLoadedParams.DynamoWindow.DataContext as DynamoViewModel).Model.EngineController.LiveRunnerRuntimeCore.ReserveTraceAfterExec = ElementBindingSwitch.IsToggled;
+            // TODO: depend on new nugets
+            //(viewLoadedParams.DynamoWindow.DataContext as DynamoViewModel).Model.EngineController.LiveRunnerRuntimeCore.ReserveTraceAfterExec = ElementBindingSwitch.IsToggled;
         }
     }
 }
