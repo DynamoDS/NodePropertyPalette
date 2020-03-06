@@ -6,6 +6,7 @@ using Dynamo.Extensions;
 using Dynamo.Graph.Nodes;
 using Dynamo.Models;
 using Dynamo.Utilities;
+using Dynamo.ViewModels;
 using Dynamo.Wpf.Extensions;
 
 namespace NodePropertyPalette
@@ -91,6 +92,11 @@ namespace NodePropertyPalette
         {
             DataGridRow row = sender as DataGridRow;
             row.DetailsVisibility = row.DetailsVisibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void ElementBindingSwitch_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            (viewLoadedParams.DynamoWindow.DataContext as DynamoViewModel).Model.EngineController.LiveRunnerRuntimeCore.ReserveTraceAfterExec = ElementBindingSwitch.IsToggled;
         }
     }
 }
