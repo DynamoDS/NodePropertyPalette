@@ -1,5 +1,6 @@
 ﻿using Dynamo.Core;
 using Dynamo.Graph.Nodes;
+using Dynamo.Graph.Nodes.ZeroTouch;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace NodePropertyPalette
     public class PropertyPaletteNodeViewModel : NotificationObject, IDisposable
     {
         private readonly string[] BoundProperties = new string[] { "IsFrozen" };
+        private readonly string[] KnownDynamoNodeNamespaces = new string[] { "DSCore", "DSOffice", "Autodesk.DesignScript", "DesignScript", "Tessellation" };
 
         #region Properties
         /// <summary>
@@ -31,6 +33,24 @@ namespace NodePropertyPalette
             get
             {
                 return NodeModel.NodeType;
+            }
+        }
+
+        /// <summary>
+        /// Whether the node is built-into Dynamo or not (either hosted or imported).
+        /// </summary>
+        public NodeBuiltInStatus IsBuiltIn
+        {
+            get
+            {
+                // We are assuming non built-in nodes are always zero-touch
+                if (NodeModel is DSFunctionBase)
+                {
+                    // And that they don't use any of our node namespaces
+                    var mangledName = (NodeModel as DSFunctionBase).Controller.MangledName;
+                    return KnownDynamoNodeNamespaces.Any(ns => mangledName.StartsWith(ns)) ? NodeBuiltInStatus.Yes : NodeBuiltInStatus.No;
+                }
+                return NodeBuiltInStatus.Yes;
             }
         }
 

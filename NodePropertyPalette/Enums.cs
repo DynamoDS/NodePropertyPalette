@@ -13,4 +13,10 @@ namespace NodePropertyPalette
         Unfreeze,
         Disconnect
     }
+
+    public enum NodeBuiltInStatus
+    {
+        No,
+        Yes
+    }
 }

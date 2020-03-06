@@ -10,7 +10,7 @@
              d:DesignHeight="300" d:DesignWidth="300"
              Width="500" Height="100">
 
-    <Grid Name="MainGrid" >
+    <Grid Name="MainGrid" HorizontalAlignment="Stretch">
         <Grid.Resources>
             <!-- DataGrid style -->
             <Style x:Key="DataGridStyle1" TargetType="{x:Type DataGrid}">
@@ -264,6 +264,10 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
         <StackPanel 
             Orientation="Horizontal"
             HorizontalAlignment="Left"
@@ -310,7 +314,8 @@
             CanUserSortColumns="True"
             HeadersVisibility="Column"
             SelectionChanged="NodesTable_SelectionChanged"
-            RowDetailsVisibilityMode="Collapsed">
+            RowDetailsVisibilityMode="Collapsed"
+            HorizontalAlignment="Stretch">
 
                 <DataGrid.GroupStyle>
                     <GroupStyle>
@@ -361,16 +366,28 @@
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
 
+                    <!-- Built-In -->
+                    <DataGridTextColumn Header="Built-in" Binding="{Binding IsBuiltIn}" Foreground="#aaaaaa" IsReadOnly="True" Width="Auto" MinWidth="30">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                                <Setter Property="Margin" Value="10,0,10,0"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
                 </DataGrid.Columns>
                 <!-- Expanded Details -->
                 <DataGrid.RowDetailsTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Label Content="{Binding GUID, Mode=OneWay}"></Label>
-                            <CheckBox IsChecked="{Binding IsSetAsInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="IsSetAsInput" HorizontalAlignment="Left"/>
-                            <CheckBox IsChecked="{Binding IsSetAsOutput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="IsSetAsOutput" HorizontalAlignment="Left"/>
-                            <CheckBox IsChecked="{Binding IsFrozen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="Frozen" HorizontalAlignment="Left"/>
-                        </StackPanel>
+                        <WrapPanel Orientation="Horizontal" MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=DataGrid}}">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                <Label Foreground="White" Margin="5">Guid:</Label>
+                                <Label Foreground="White" Margin="5" Content="{Binding GUID, Mode=OneWay}"></Label>
+                            </StackPanel>
+                            <CheckBox IsChecked="{Binding IsSetAsInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="IsSetAsInput" HorizontalAlignment="Left" Margin="5"/>
+                            <CheckBox IsChecked="{Binding IsSetAsOutput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="IsSetAsOutput" HorizontalAlignment="Left" Margin="5"/>
+                            <CheckBox IsChecked="{Binding IsFrozen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="Frozen" HorizontalAlignment="Left" Margin="5"/>
+                        </WrapPanel>
                     </DataTemplate>
                 </DataGrid.RowDetailsTemplate>
             </DataGrid>
