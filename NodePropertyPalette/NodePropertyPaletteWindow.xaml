@@ -379,15 +379,15 @@
                 <!-- Expanded Details -->
                 <DataGrid.RowDetailsTemplate>
                     <DataTemplate>
-                        <WrapPanel Orientation="Horizontal" MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=DataGrid}}">
+                        <StackPanel Orientation="Vertical" MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=DataGrid}}">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                <Label Foreground="White" Margin="5">Guid:</Label>
-                                <Label Foreground="White" Margin="5" Content="{Binding GUID, Mode=OneWay}"></Label>
+                                <Label Foreground="White" Margin="18,0,0,0">Guid:</Label>
+                                <Label Foreground="White" Margin="0" Content="{Binding GUID, Mode=OneWay}"></Label>
                             </StackPanel>
-                            <CheckBox IsChecked="{Binding IsSetAsInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="IsSetAsInput" HorizontalAlignment="Left" Margin="5"/>
-                            <CheckBox IsChecked="{Binding IsSetAsOutput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="IsSetAsOutput" HorizontalAlignment="Left" Margin="5"/>
-                            <CheckBox IsChecked="{Binding IsFrozen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="Frozen" HorizontalAlignment="Left" Margin="5"/>
-                        </WrapPanel>
+                            <CheckBox IsChecked="{Binding IsSetAsInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="IsSetAsInput" HorizontalAlignment="Left" Margin="20,0,0,0"/>
+                            <CheckBox IsChecked="{Binding IsSetAsOutput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="IsSetAsOutput" HorizontalAlignment="Left" Margin="20,0,0,0"/>
+                            <CheckBox IsChecked="{Binding IsFrozen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="Frozen" HorizontalAlignment="Left" Margin="20,0,0,0"/>
+                        </StackPanel>
                     </DataTemplate>
                 </DataGrid.RowDetailsTemplate>
             </DataGrid>
