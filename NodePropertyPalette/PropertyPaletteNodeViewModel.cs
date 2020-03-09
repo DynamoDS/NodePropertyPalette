@@ -50,6 +50,10 @@ namespace NodePropertyPalette
                     var mangledName = (NodeModel as DSFunctionBase).Controller.MangledName;
                     return KnownDynamoNodeNamespaces.Any(ns => mangledName.StartsWith(ns)) ? NodeBuiltInStatus.Yes : NodeBuiltInStatus.No;
                 }
+                if (NodeModel is Dynamo.Graph.Nodes.CustomNodes.Function)
+                {
+                    return NodeBuiltInStatus.No;
+                }
                 return NodeBuiltInStatus.Yes;
             }
         }
