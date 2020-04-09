@@ -31,7 +31,8 @@ namespace NodePropertyPalette
             {
                 // Set the data context for the main grid in the window.
                 NodesTable = { DataContext = ViewModel },
-                MainGrid = { DataContext = ViewModel }
+                MainGrid = { DataContext = ViewModel },
+                Owner = p.DynamoWindow
             };
 
             NodePropertyPaletteMenuItem = new MenuItem { Header = "Show NodePropertyPalette", IsCheckable = true, IsChecked = false };
